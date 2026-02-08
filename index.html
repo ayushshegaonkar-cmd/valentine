@@ -1,80 +1,163 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>Valentine 💖</title>
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      text-align: center;
-      height: 100vh;
-      margin: 0;
-      background-color: #ffe6f0;
-      overflow: hidden;
-    }
+<meta charset="UTF-8">
+<title>Propose Day 💖</title>
 
-    h1 {
-      margin-top: 100px;
-      font-size: 32px;
-    }
+<style>
+  * {
+    box-sizing: border-box;
+  }
 
-    button {
-      font-size: 20px;
-      padding: 12px 30px;
-      border: none;
-      border-radius: 8px;
-      cursor: pointer;
-      position: absolute;
-    }
+  body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #ff758c, #ff7eb3);
+    font-family: 'Segoe UI', sans-serif;
+    overflow: hidden;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    color: white;
+  }
 
-    #yesBtn {
-      background-color: #ff4d6d;
-      color: white;
-      left: 45%;
-      top: 55%;
-    }
+  .container {
+    text-align: center;
+    z-index: 2;
+  }
 
-    #noBtn {
-      background-color: #cccccc;
-      left: 55%;
-      top: 55%;
-    }
+  h1 {
+    font-size: 42px;
+    margin-bottom: 10px;
+    text-shadow: 0 0 20px rgba(255,255,255,0.6);
+  }
 
-    #gif {
-      display: none;
-      margin-top: 40px;
-    }
-  </style>
+  p {
+    font-size: 20px;
+    margin-bottom: 40px;
+  }
+
+  button {
+    font-size: 22px;
+    padding: 14px 36px;
+    border: none;
+    border-radius: 40px;
+    cursor: pointer;
+    position: absolute;
+    transition: all 0.3s ease;
+  }
+
+  #yesBtn {
+    background: #ff2e63;
+    color: white;
+    left: 42%;
+    top: 60%;
+    box-shadow: 0 0 20px rgba(255, 46, 99, 0.8);
+  }
+
+  #noBtn {
+    background: #ffffff;
+    color: #333;
+    left: 55%;
+    top: 60%;
+  }
+
+  #result {
+    display: none;
+    animation: fadeIn 1.2s ease;
+  }
+
+  #result h2 {
+    font-size: 36px;
+    margin-bottom: 20px;
+  }
+
+  img {
+    width: 320px;
+    border-radius: 20px;
+    box-shadow: 0 0 30px rgba(0,0,0,0.4);
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: scale(0.9); }
+    to { opacity: 1; transform: scale(1); }
+  }
+
+  /* Floating hearts */
+  .heart {
+    position: fixed;
+    bottom: -10px;
+    font-size: 24px;
+    animation: floatUp 6s linear infinite;
+    opacity: 0.7;
+  }
+
+  @keyframes floatUp {
+    0% { transform: translateY(0) scale(1); opacity: 1; }
+    100% { transform: translateY(-110vh) scale(1.5); opacity: 0; }
+  }
+</style>
 </head>
+
 <body>
 
-  <h1>Will you be my Valentine? 💘</h1>
+<div class="container" id="main">
+  <h1>NAVYA 💖</h1>
+  <p>It’s Propose Day… and I have just one question</p>
 
-  <button id="yesBtn">Yes</button>
-  <button id="noBtn">No</button>
+  <h1>Will you be my Valentine? 🌹</h1>
 
-  <div id="gif">
-    <img src="https://media.giphy.com/media/l0MYt5jPR6QX5pnqM/giphy.gif" width="320">
-  </div>
+  <button id="yesBtn">YES 😍</button>
+  <button id="noBtn">NO 🙄</button>
+</div>
 
-  <script>
-    const noBtn = document.getElementById("noBtn");
-    const yesBtn = document.getElementById("yesBtn");
-    const gif = document.getElementById("gif");
+<div class="container" id="result">
+  <h2>I KNEW IT 😏💃🕺</h2>
+  <img src="https://media.giphy.com/media/3o7aD2saalBwwftBIY/giphy.gif">
+</div>
 
-    noBtn.addEventListener("mouseover", () => {
-      const x = Math.random() * (window.innerWidth - 120);
-      const y = Math.random() * (window.innerHeight - 60);
-      noBtn.style.left = `${x}px`;
-      noBtn.style.top = `${y}px`;
-    });
+<audio id="music" src="https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3"></audio>
 
-    yesBtn.addEventListener("click", () => {
-      yesBtn.style.display = "none";
-      noBtn.style.display = "none";
-      gif.style.display = "block";
-    });
-  </script>
+<script>
+  const noBtn = document.getElementById("noBtn");
+  const yesBtn = document.getElementById("yesBtn");
+  const result = document.getElementById("result");
+  const main = document.getElementById("main");
+  const music = document.getElementById("music");
+
+  let yesScale = 1;
+
+  noBtn.addEventListener("mouseover", () => {
+    const x = Math.random() * (window.innerWidth - 150);
+    const y = Math.random() * (window.innerHeight - 100);
+
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+
+    yesScale += 0.1;
+    yesBtn.style.transform = `scale(${yesScale})`;
+  });
+
+  yesBtn.addEventListener("click", () => {
+    main.style.display = "none";
+    result.style.display = "block";
+    music.play();
+  });
+
+  // Create floating hearts
+  setInterval(() => {
+    const heart = document.createElement("div");
+    heart.classList.add("heart");
+    heart.innerHTML = "❤️";
+    heart.style.left = Math.random() * 100 + "vw";
+    heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+    document.body.appendChild(heart);
+
+    setTimeout(() => {
+      heart.remove();
+    }, 7000);
+  }, 300);
+</script>
 
 </body>
 </html>
